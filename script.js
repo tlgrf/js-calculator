@@ -66,3 +66,30 @@ function divide(a, b) {
   recordCalc('divide', a, b, result);
   return result;
 }
+
+// DOM element references
+const aInput = document.getElementById('a');
+const bInput = document.getElementById('b');
+const opSelect = document.getElementById('op');
+const goBtn = document.getElementById('go');
+const resultEl = document.getElementById('result');
+const historyEl = document.getElementById('history-output');
+
+// Renders the history array to the page
+function renderHistory() {
+  historyEl.textContent = JSON.stringify(history, null, 2);
+}
+
+// Perform calculation on button click
+goBtn.addEventListener('click', () => {
+  const a = parseFloat(aInput.value);
+  const b = parseFloat(bInput.value);
+  const op = opSelect.value;
+  try {
+    const res = window[op](a, b);  // calls add/subtract/etc.
+    resultEl.textContent = `Result: ${res}`;
+  } catch (e) {
+    resultEl.textContent = `Error: ${e.message}`;
+  }
+  renderHistory();
+});
